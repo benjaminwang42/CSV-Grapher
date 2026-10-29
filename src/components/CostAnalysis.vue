@@ -245,7 +245,10 @@ export default {
         legend: { top: 40, data: ["Salary", "Bonus"] },
         xAxis: {
           type: "value",
-          name: "Total Cost",
+          name: this.sumType === "percentages" ? "Share of Total Cost (%)" : "Total Cost ($)",
+          axisLabel: {
+            formatter: this.sumType === "percentages" ? "{value}%" : "${value}",
+          },
           nameLocation: "middle",
           nameGap: 40,
           nameTextStyle: {
