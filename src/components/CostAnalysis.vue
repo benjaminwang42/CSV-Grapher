@@ -66,6 +66,7 @@ export default {
       departmentSalaryData: [],
       departmentBonusData: [],
       chart: null,
+      resizeObserver: null,
       chartOption: {
         title: {
           text: "Headcount Cost Distribution (Partitioned into Salary and Bonus)",
@@ -164,6 +165,15 @@ export default {
     );
 
     this.updateCategory();
+    this.resizeObserver = new ResizeObserver(() => {
+      echarts.getInstanceByDom(this.$refs.costAnalysisChart)?.resize();
+    });
+    this.resizeObserver.observe(this.$refs.costAnalysisChart);
+  },
+  beforeUnmount() {
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = null;
+    echarts.dispose(this.$refs.costAnalysisChart);
   },
   methods: {
     updateCategory() {
